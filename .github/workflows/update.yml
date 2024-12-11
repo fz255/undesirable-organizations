@@ -24,10 +24,13 @@ jobs:
                 node-version: '20.x'
             - run: npm i node-fetch node-html-parser
 
-            - name: Get registry
+            - name: Download registry
+              run: node orgs.js
+
+            - name: Commit update
               run: |
                 set +e
-                git add masterlist.ml -f
+                git add registry.json -f
                 git config user.name "$(git --no-pager log --format=format:'%an' -n 1)"
                 git config user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
                 git commit -m "Update registry"
